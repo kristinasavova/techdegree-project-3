@@ -49,9 +49,7 @@ designs[0].style.display = 'none'; // hide the first one
 
 // Select the select element for the 'design' menu and set event listener on it
 
-const selectDesign = document.querySelector('#design');
-
-selectDesign.addEventListener('change', (event) => {
+document.querySelector('#design').addEventListener('change', (event) => {
     for (i = 0; i < designs.length; i ++) {
         let designOption = event.target.value;  
         if (designOption === 'js puns') { // if 'js puns' is selected, hide 'heart js' options
@@ -76,3 +74,53 @@ selectDesign.addEventListener('change', (event) => {
     }
 });
 
+// Creating an element for the 'total cost' and appending it to the 'activity fieldset' 
+
+const totalCostElement = document.createElement('p'); 
+const selectActivity = document.querySelector('.activities'); 
+selectActivity.appendChild(totalCostElement); 
+let totalCost = 0; // declaring a total cost variable
+
+const activities = document.querySelectorAll('.activities input'); // select all checkboxes to loop through
+
+selectActivity.addEventListener('change', (event) => { 
+    const clicked = event.target; 
+    
+    // Calculating the total cost of the selected activities 
+    
+    const clickedCost = parseInt(clicked.getAttribute('data-cost')); // the cost of the selected activity  
+    for (let i = 0; i < activities; i ++) { 
+        if (clicked.checked) {
+            totalCost =+ clickedCost; // add the cost of the selected activity to the total cost
+        } else {
+            totalCost =- clickedCost; // subtract the cost if the activity gets unchecked
+        } 
+    }
+    
+    totalCostElement.innerHTML = `<p>Total: ${totalCost}$</p>`; // display the total cose dynamically  
+    
+    // Making it not possible to select the activities which are planned for the same time 
+
+    const clickedDate = clicked.getAttribute('data-day-and-time'); // get the date of the selected activity
+    for (let i = 0; i < activities.length; i ++) {
+        const activity = activities[i]; 
+        const activityDate = activity.getAttribute('data-day-and-time'); // get the date of each activity in the array
+        
+        // Disable activities which are planned for the same date and time but not the selected one
+
+        if (clickedDate === activityDate && clicked !== activity) { 
+            if (activity.checked) { 
+                activity.disabled = true; 
+            } else { 
+                activity.disabled = false; 
+            }
+        }
+    }
+});
+
+
+
+
+
+
+ 
