@@ -89,11 +89,11 @@ selectActivity.addEventListener('change', (event) => {
     // Calculating the total cost of the selected activities 
     
     const clickedCost = parseInt(clicked.getAttribute('data-cost')); // the cost of the selected activity  
-    for (let i = 0; i < activities; i ++) { 
+    for (let i = 0; i < clicked.checked; i ++) { 
         if (clicked.checked) {
-            totalCost =+ clickedCost; // add the cost of the selected activity to the total cost
+            totalCost = totalCost + clickedCost; // add the cost of the selected activity to the total cost
         } else {
-            totalCost =- clickedCost; // subtract the cost if the activity gets unchecked
+            totalCost = totalCost - clickedCost; // subtract the cost if the activity gets unchecked
         } 
     }
     
@@ -118,7 +118,41 @@ selectActivity.addEventListener('change', (event) => {
     }
 });
 
+// Select 'payment options' in the select menu and hide 'select payment method' 
 
+const paymentOption = document.querySelectorAll('#payment option'); 
+paymentOption[0].style.display = 'none'; 
+paymentOption[1].setAttribute('selected', true); // select credit card payment option by default 
+
+// Select divs with different payment options and hide paypal and bitcoin information by default 
+
+const creditcard = document.querySelector('#credit-card'); 
+const paypal = document.querySelector('#paypal'); 
+paypal.style.display = 'none'; 
+const bitcoin = document.querySelector('#bitcoin');
+bitcoin.style.display = 'none'; 
+
+// Display paypal or bitcoin information when a user select respectively paypal or bitcoin payment option  
+
+document.querySelector('#payment').addEventListener('change', () => {
+    for (let i = 0; i < paymentOption.length; i ++) {
+        if (paymentOption[1].selected) {
+            creditcard.style.display = ''; 
+            paypal.style.display = 'none'; 
+            bitcoin.style.display = 'none'; 
+        }
+        if (paymentOption[2].selected) {
+            creditcard.style.display = 'none'; 
+            paypal.style.display = ''; 
+            bitcoin.style.display = 'none'; 
+        }
+        if (paymentOption[3].selected) {
+            creditcard.style.display = 'none'; 
+            paypal.style.display = 'none'; 
+            bitcoin.style.display = ''; 
+        }  
+    }
+});
 
 
 
