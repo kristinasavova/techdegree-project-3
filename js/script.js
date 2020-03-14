@@ -235,9 +235,6 @@ form.addEventListener('submit', (event) => {
     nameValidator();
     emailValidator();
     activityValidator();
-    cardNumberValidator();
-    zipCodeValidator();
-    cvvValidator();
 
     if (!nameValidator()) {
         event.preventDefault();
@@ -251,17 +248,26 @@ form.addEventListener('submit', (event) => {
         event.preventDefault();
         console.log(`Activity Validator prevented Submission`);
     }
-    if (!cardNumberValidator()) {
-        event.preventDefault();
-        console.log(`Card Number Validator prevented Submission`);
-    }
-    if (!zipCodeValidator()) {
-        event.preventDefault();
-        console.log(`Zip Code Validator prevented Submission`);
-    }
-    if (!cvvValidator()) {
-        event.preventDefault();
-        console.log(`CVV Validator prevented Submission`); 
-    }
+
+    const creditCardOption = document.querySelectorAll('#payment option')[1];
+
+    if (creditCardOption.selected) {
+        cardNumberValidator();
+        zipCodeValidator();
+        cvvValidator();
+
+        if (!cardNumberValidator()) {
+            event.preventDefault();
+            console.log(`Card Number Validator prevented Submission`);
+        }
+        if (!zipCodeValidator()) {
+            event.preventDefault();
+            console.log(`Zip Code Validator prevented Submission`);
+        }
+        if (!cvvValidator()) {
+            event.preventDefault();
+            console.log(`CVV Validator prevented Submission`); 
+        }   
+    } 
 });
 
