@@ -184,7 +184,15 @@ const emailValidator = () => {
     }
 }
 
-// A function that checks if at least one activity is chosen   
+// A message which appears if no activities are selected before submission 
+
+const tip = document.createElement('span');
+tip.innerHTML = `<span>At least one activity must be selected</span>`; 
+tip.style.color = 'red'; 
+selectActivity.appendChild(tip); 
+tip.style.display = 'none'; 
+
+// A function that checks if at least one activity is chosen  
 
 const activityValidator = () => {
     for (let i = 0; i < activities.length; i ++) {
@@ -192,6 +200,7 @@ const activityValidator = () => {
             return true;
         }
     }
+    tip.style.display = '';
     return false;  
 } 
 
@@ -230,6 +239,8 @@ const cvvValidator = () => {
         return false; 
     }
 }
+
+// Submit if all the information has passed the validation 
 
 form.addEventListener('submit', (event) => {
     nameValidator();
