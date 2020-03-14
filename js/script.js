@@ -231,21 +231,27 @@ const cardNumberDiv = document.querySelector('.col-6');
 cardNumberTip.style.color = 'red'; 
 cardNumberDiv.appendChild(cardNumberTip);
 
-// A function that checks if the credit card number is a number between 13 and 16 digits
+// A function that checks if the card number is between 13 and 16 digits and gives tips depending on the error
 
 const cardNumberValidator = () => {
-    if (/^\d{13}((\d{3})|(\d{2})|(\d{1}))?$/.test(cardNumber.value)) {
+    if (/^\d{13,16}$/.test(cardNumber.value)) {
         cardNumber.style.borderColor = '#228b22';
         cardNumberTip.style.display = 'none'; 
         return true; 
     } else { // show a tip depending on the error 
-        if (cardNumber.value.length < 1) { 
-           cardNumberTip.innerHTML = `<span>Please enter a credit card number</span>`; 
-        } else if (cardNumber.value.length < 13 || cardNumber.value.length > 16) {
-            cardNumberTip.innerHTML = `<span>Please enter a number that is between 13 and 16 digits long</span>`;
-        }
-        cardNumber.style.borderColor = 'red';
-        return false; 
+            if (cardNumber.value.length < 1) { // if the field is blank
+            cardNumberTip.innerHTML = `<span>Please enter a credit card number</span>`; 
+            } 
+            if (/[a-zA-Z]+/.test(cardNumber.value)) { // if contains any letters
+                cardNumberTip.innerHTML = `<span>A credit card must contain only numbers</span>`; 
+            }
+            if (cardNumber.value.length > 16) { // if more than 16 numbers
+                cardNumberTip.innerHTML = `<span>A credit card must be not longer than 16 digits</span>`;
+            }
+            if (cardNumber.value.length < 13) { // if less than 13 numbers
+                cardNumberTip.innerHTML = `<span>A credit card must be more than 13 digits long</span>`;
+            }
+        cardNumber.style.borderColor = 'red'; 
     }
 }
 
@@ -273,13 +279,14 @@ const cvvValidator = () => {
     }
 }
 
-// Handlers which provide a real-time validation for name, email and credit card details
+// Handlers which provide a real-time validation for name, email, credit card details and activities
 
 name.addEventListener('keyup', nameValidator);
 email.addEventListener('keyup', emailValidator);
 cardNumber.addEventListener('keyup', cardNumberValidator);
 zipCode.addEventListener('keyup', zipCodeValidator);
 cvv.addEventListener('keyup', cvvValidator);
+selectActivity.addEventListener('change', activityValidator);
 
 // Submit if all the information has passed the validation 
 
