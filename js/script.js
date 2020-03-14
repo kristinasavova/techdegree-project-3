@@ -37,16 +37,19 @@ selectJob.addEventListener('change', () => {
     } 
 });
 
-// Select and hide colors in the 'color' drop down menu   
+// Select the color label, color select menu and colors and hide them all by default  
 
+const selectColor = document.querySelector('#color'); // color select menu 
+const selectColorLabel = document.querySelector('#colors-js-puns label'); // color label
+selectColor.style.display = 'none';
+selectColorLabel.style.display = 'none'; 
 const colors = document.querySelectorAll('#color option'); 
 for (let i = 0; i < colors.length; i ++) {
     colors[i].style.display = 'none'; 
 }  
 
 // Update the 'color' field to read 'please select a T-shirt theme' 
-
-const selectColor = document.querySelector('#color'); // select the parent node 
+ 
 const selectThemeOption = document.createElement('option'); // create 'select theme' option  
 selectThemeOption.textContent = 'Please select a T-shirt theme'; 
 selectThemeOption.setAttribute('selected', true); // update the 'color' field  
@@ -64,6 +67,8 @@ document.querySelector('#design').addEventListener('change', (event) => {
     for (i = 0; i < designs.length; i ++) {
         let designOption = event.target.value;  
         if (designOption === 'js puns') { // if 'js puns' is selected, hide 'heart js' options
+            selectColor.style.display = ''; // show color select menu
+            selectColorLabel.style.display = ''; // show color label 
             selectThemeOption.removeAttribute('selected'); 
             colors[0].setAttribute('selected', true); // update the 'color' field
             for (let i = 0; i < 3; i ++) { 
@@ -73,6 +78,8 @@ document.querySelector('#design').addEventListener('change', (event) => {
                 colors[i].style.display = 'none'; 
             } 
         } else if (designOption === 'heart js') { // if 'heart js' is selected, hide 'js puns' options
+            selectColor.style.display = ''; // show color select menu
+            selectColorLabel.style.display = ''; // show color label 
             selectThemeOption.removeAttribute('selected'); 
             colors[3].setAttribute('selected', true); // update the 'color' field 
             for (let i = 0; i < 3; i ++) { 
@@ -184,13 +191,13 @@ const emailValidator = () => {
     }
 }
 
-// A message which appears if no activities are selected before submission 
+// A tip which appears if no activities are selected before submission 
 
-const tip = document.createElement('span');
-tip.innerHTML = `<span>At least one activity must be selected</span>`; 
-tip.style.color = 'red'; 
-selectActivity.appendChild(tip); 
-tip.style.display = 'none'; 
+const activityTip = document.createElement('span');
+activityTip.innerHTML = `<span>At least one activity must be selected</span>`; 
+activityTip.style.color = 'red'; 
+selectActivity.appendChild(activityTip); 
+activityTip.style.display = 'none'; 
 
 // A function that checks if at least one activity is chosen  
 
@@ -200,9 +207,16 @@ const activityValidator = () => {
             return true;
         }
     }
-    tip.style.display = '';
+    activityTip.style.display = '';
     return false;  
 } 
+
+// A tip which appears to help a user to provide a credit card number
+
+const cardNumberTip = document.createElement('span'); 
+const cardNumberDiv = document.querySelector('.col-6'); 
+cardNumberTip.style.color = 'red'; 
+cardNumberDiv.appendChild(cardNumberTip);
 
 // A function that checks if the credit card number is a number between 13 and 16 digits
 
@@ -210,7 +224,12 @@ const cardNumberValidator = () => {
     if (/^\d{13}((\d{3})|(\d{2})|(\d{1}))?$/.test(cardNumber.value)) {
         cardNumber.style.borderColor = '#228b22';
         return true; 
-    } else {
+    } else { // show a tip depending on the error 
+        if (cardNumber.value.length < 1) { 
+           cardNumberTip.innerHTML = `<span>Please enter a credit card number</span>`; 
+        } else if (cardNumber.value.length < 13 || cardNumber.value.length > 16) {
+            cardNumberTip.innerHTML = `<span>Please enter a number that is between 13 and 16 digits long</span>`;
+        }
         cardNumber.style.borderColor = 'red';
         return false; 
     }
@@ -259,6 +278,8 @@ form.addEventListener('submit', (event) => {
         event.preventDefault();
         console.log(`Activity Validator prevented Submission`);
     }
+
+    // If credit card is the selected payment method, validate credit card number, zip code and CVV 
 
     const creditCardOption = document.querySelectorAll('#payment option')[1];
 
