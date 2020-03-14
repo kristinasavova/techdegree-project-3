@@ -79,24 +79,22 @@ document.querySelector('#design').addEventListener('change', (event) => {
 const totalCostElement = document.createElement('p'); 
 const selectActivity = document.querySelector('.activities'); 
 selectActivity.appendChild(totalCostElement); 
-let totalCost = 0; // declaring a total cost variable
+let totalCost = 0; 
 
 const activities = document.querySelectorAll('.activities input'); // select all checkboxes to loop through
 
 selectActivity.addEventListener('change', (event) => { 
-    const clicked = event.target; 
     
+    const clicked = event.target; 
+
     // Calculating the total cost of the selected activities 
     
-    const clickedCost = parseInt(clicked.getAttribute('data-cost')); // the cost of the selected activity  
-    for (let i = 0; i < clicked.checked; i ++) { 
-        if (clicked.checked) {
-            totalCost = totalCost + clickedCost; // add the cost of the selected activity to the total cost
-        } else {
-            totalCost = totalCost - clickedCost; // subtract the cost if the activity gets unchecked
-        } 
-    }
-    
+    if (clicked.checked) {
+        totalCost += +clicked.getAttribute('data-cost'); // add the cost of the selected activity
+    } else {
+        totalCost -= +clicked.getAttribute('data-cost'); // subtract the cost of the selected activity 
+    }  
+        
     totalCostElement.innerHTML = `<p>Total: ${totalCost}$</p>`; // display the total cose dynamically  
     
     // Making it not possible to select the activities which are planned for the same time 
@@ -109,7 +107,7 @@ selectActivity.addEventListener('change', (event) => {
         // Disable activities which are planned for the same date and time but not the selected one
 
         if (clickedDate === activityDate && clicked !== activity) { 
-            if (activity.checked) { 
+            if (clicked.checked) { 
                 activity.disabled = true; 
             } else { 
                 activity.disabled = false; 
@@ -155,6 +153,3 @@ document.querySelector('#payment').addEventListener('change', () => {
 });
 
 
-
-
- 
