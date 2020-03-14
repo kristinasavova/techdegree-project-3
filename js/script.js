@@ -1,5 +1,16 @@
 // The Third Techdegree Project
 
+// Variables for validation 
+
+const form = document.querySelector('form');
+const name = document.querySelector('#name'); 
+const email = document.querySelector('#mail'); 
+const selectActivity = document.querySelector('.activities'); // a fieldset for activities 
+const activities = document.querySelectorAll('.activities input'); // all activities  
+const cardNumber = document.querySelector('#cc-num');
+const zipCode = document.querySelector('#zip'); 
+const cvv = document.querySelector('#cvv');
+
 // A function for giving focus to the first text field when the page has been loaded
 
 window.onload = function () {
@@ -77,11 +88,8 @@ document.querySelector('#design').addEventListener('change', (event) => {
 // Creating an element for the 'total cost' and appending it to the 'activity fieldset' 
 
 const totalCostElement = document.createElement('p'); 
-const selectActivity = document.querySelector('.activities'); 
 selectActivity.appendChild(totalCostElement); 
 let totalCost = 0; 
-
-const activities = document.querySelectorAll('.activities input'); // select all checkboxes to loop through
 
 selectActivity.addEventListener('change', (event) => { 
     
@@ -152,4 +160,108 @@ document.querySelector('#payment').addEventListener('change', () => {
     }
 });
 
+// A function that checks if the name field is not blank 
+
+const nameValidator = () => { 
+    if (name.value.length > 0) {
+        name.style.borderColor = '#228b22'; 
+        return true; 
+    } else {
+        name.style.borderColor = 'red'; 
+        return false; 
+    }
+}
+
+// A function that checks if the email address is validly formatted 
+
+const emailValidator = () => {
+    if (/^\w*@\w*\.\w*$/.test(email.value)) {
+        email.style.borderColor = '#228b22';
+        return true;
+    } else {
+        email.style.borderColor = 'red'; 
+        return false; 
+    }
+}
+
+// A function that checks if at least one activity is chosen   
+
+const activityValidator = () => {
+    for (let i = 0; i < activities.length; i ++) {
+        if (activities[i].checked > 0) { 
+            return true;
+        }
+    }
+    return false;  
+} 
+
+// A function that checks if the credit card number is a number between 13 and 16 digits
+
+const cardNumberValidator = () => {
+    if (/^\d{13}((\d{3})|(\d{2})|(\d{1}))?$/.test(cardNumber.value)) {
+        cardNumber.style.borderColor = '#228b22';
+        return true; 
+    } else {
+        cardNumber.style.borderColor = 'red';
+        return false; 
+    }
+}
+
+// A function that checks if the zip code is a 5-digit number  
+
+const zipCodeValidator = () => {
+    if (/^\d{5}$/.test(zipCode.value)) {
+        zipCode.style.borderColor = '#228b22';
+        return true;
+    } else {
+        zipCode.style.borderColor = 'red';
+        return false; 
+    } 
+}
+
+// A function that checks if CVV is a 3-digit number 
+
+const cvvValidator = () => {
+    if (/^\d{3}$/.test(cvv.value)) {
+        cvv.style.borderColor = '#228b22';
+        return true;
+    } else {
+        cvv.style.borderColor = 'red'; 
+        return false; 
+    }
+}
+
+form.addEventListener('submit', (event) => {
+    nameValidator();
+    emailValidator();
+    activityValidator();
+    cardNumberValidator();
+    zipCodeValidator();
+    cvvValidator();
+
+    if (!nameValidator()) {
+        event.preventDefault();
+        console.log(`Name Validator prevented Submission`);
+    }
+    if (!emailValidator()) {
+        event.preventDefault();
+        console.log(`Email Validator prevented Submission`); 
+    }
+    if (!activityValidator()) {
+        event.preventDefault();
+        console.log(`Activity Validator prevented Submission`);
+    }
+    if (!cardNumberValidator()) {
+        event.preventDefault();
+        console.log(`Card Number Validator prevented Submission`);
+    }
+    if (!zipCodeValidator()) {
+        event.preventDefault();
+        console.log(`Zip Code Validator prevented Submission`);
+    }
+    if (!cvvValidator()) {
+        event.preventDefault();
+        console.log(`CVV Validator prevented Submission`); 
+    }
+});
 
