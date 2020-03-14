@@ -94,7 +94,8 @@ document.querySelector('#design').addEventListener('change', (event) => {
 
 // Creating an element for the 'total cost' and appending it to the 'activity fieldset' 
 
-const totalCostElement = document.createElement('p'); 
+const totalCostElement = document.createElement('p');
+totalCostElement.style.color = 'black';  
 selectActivity.appendChild(totalCostElement); 
 let totalCost = 0; 
 
@@ -179,13 +180,24 @@ const nameValidator = () => {
     }
 }
 
+// A tip which appears dynamically until a user enters a valid email address
+
+const emailTip = document.createElement('span'); // create tip element
+const basicInfoFieldset = document.querySelector('.basic');
+basicInfoFieldset.insertBefore(emailTip, email.nextElementSibling); // insert a tip into DOM 
+emailTip.style.color = 'red'; 
+emailTip.innerHTML = `<span>Please enter a valid email address</span>`;
+emailTip.style.display = 'none'; // hide tip by default
+
 // A function that checks if the email address is validly formatted 
 
 const emailValidator = () => {
     if (/^\w*@\w*\.\w*$/.test(email.value)) {
         email.style.borderColor = '#228b22';
+        emailTip.style.display = 'none'; 
         return true;
     } else {
+        emailTip.style.display = ''; 
         email.style.borderColor = 'red'; 
         return false; 
     }
@@ -204,6 +216,7 @@ activityTip.style.display = 'none';
 const activityValidator = () => {
     for (let i = 0; i < activities.length; i ++) {
         if (activities[i].checked > 0) { 
+            activityTip.style.display = 'none'; 
             return true;
         }
     }
@@ -223,6 +236,7 @@ cardNumberDiv.appendChild(cardNumberTip);
 const cardNumberValidator = () => {
     if (/^\d{13}((\d{3})|(\d{2})|(\d{1}))?$/.test(cardNumber.value)) {
         cardNumber.style.borderColor = '#228b22';
+        cardNumberTip.style.display = 'none'; 
         return true; 
     } else { // show a tip depending on the error 
         if (cardNumber.value.length < 1) { 
@@ -259,6 +273,14 @@ const cvvValidator = () => {
     }
 }
 
+// Handlers which provide a real-time validation for name, email and credit card details
+
+name.addEventListener('keyup', nameValidator);
+email.addEventListener('keyup', emailValidator);
+cardNumber.addEventListener('keyup', cardNumberValidator);
+zipCode.addEventListener('keyup', zipCodeValidator);
+cvv.addEventListener('keyup', cvvValidator);
+
 // Submit if all the information has passed the validation 
 
 form.addEventListener('submit', (event) => {
@@ -266,19 +288,12 @@ form.addEventListener('submit', (event) => {
     emailValidator();
     activityValidator();
 
-    if (!nameValidator()) {
-        event.preventDefault();
-        console.log(`Name Validator prevented Submission`);
-    }
-    if (!emailValidator()) {
-        event.preventDefault();
-        console.log(`Email Validator prevented Submission`); 
-    }
-    if (!activityValidator()) {
-        event.preventDefault();
-        console.log(`Activity Validator prevented Submission`);
-    }
+    // Prevent submission if name or email is not valid or if at least one activity is not selected
 
+    if (!nameValidator() || !emailValidator || !activityValidator) {
+        event.preventDefault();
+    }
+    
     // If credit card is the selected payment method, validate credit card number, zip code and CVV 
 
     const creditCardOption = document.querySelectorAll('#payment option')[1];
@@ -288,18 +303,11 @@ form.addEventListener('submit', (event) => {
         zipCodeValidator();
         cvvValidator();
 
-        if (!cardNumberValidator()) {
+        // Prevent submission if credit card number, zip code or CVV is not valid
+
+        if (!cardNumberValidator() || !zipCodeValidator() || !cvvValidator()) {
             event.preventDefault();
-            console.log(`Card Number Validator prevented Submission`);
-        }
-        if (!zipCodeValidator()) {
-            event.preventDefault();
-            console.log(`Zip Code Validator prevented Submission`);
-        }
-        if (!cvvValidator()) {
-            event.preventDefault();
-            console.log(`CVV Validator prevented Submission`); 
-        }   
+        } 
     } 
 });
 
