@@ -69,7 +69,7 @@ document.querySelector('#design').addEventListener('change', (event) => {
         if (designOption === 'js puns') { // if 'js puns' is selected, hide 'heart js' options
             selectColor.style.display = ''; // show color select menu
             selectColorLabel.style.display = ''; // show color label 
-            selectThemeOption.removeAttribute('selected'); 
+            color[3].removeAttribute('selected'); 
             colors[0].setAttribute('selected', true); // update the 'color' field
             for (let i = 0; i < 3; i ++) { 
                 colors[i].style.display = ''; 
@@ -80,7 +80,7 @@ document.querySelector('#design').addEventListener('change', (event) => {
         } else if (designOption === 'heart js') { // if 'heart js' is selected, hide 'js puns' options
             selectColor.style.display = ''; // show color select menu
             selectColorLabel.style.display = ''; // show color label 
-            selectThemeOption.removeAttribute('selected'); 
+            color[0].removeAttribute('selected'); 
             colors[3].setAttribute('selected', true); // update the 'color' field 
             for (let i = 0; i < 3; i ++) { 
                 colors[i].style.display = 'none'; 
@@ -239,17 +239,15 @@ const cardNumberValidator = () => {
         cardNumberTip.style.display = 'none'; 
         return true; 
     } else { // show a tip depending on the error 
-            if (cardNumber.value.length < 1) { // if the field is blank
+        cardNumberTip.style.display = '';
+        if (cardNumber.value.length < 1) { // if the field is blank
             cardNumberTip.innerHTML = `<span>Please enter a credit card number</span>`; 
-            } 
-            if (/[a-zA-Z]+/.test(cardNumber.value)) { // if contains any letters
-                cardNumberTip.innerHTML = `<span>A credit card must contain only numbers</span>`; 
-            }
-            if (cardNumber.value.length > 16) { // if more than 16 numbers
+        } else if (/[a-zA-Z]+/.test(cardNumber.value)) { // if contains any letters
+            cardNumberTip.innerHTML = `<span>A credit card must contain only numbers</span>`; 
+        } else if (cardNumber.value.length > 16) { // if more than 16 numbers
                 cardNumberTip.innerHTML = `<span>A credit card must be not longer than 16 digits</span>`;
-            }
-            if (cardNumber.value.length < 13) { // if less than 13 numbers
-                cardNumberTip.innerHTML = `<span>A credit card must be more than 13 digits long</span>`;
+        } else if (cardNumber.value.length < 13) { // if less than 13 numbers
+                cardNumberTip.innerHTML = `<span>A credit card must be 13 or more digits long</span>`;
             }
         cardNumber.style.borderColor = 'red'; 
     }
