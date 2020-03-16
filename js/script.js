@@ -172,10 +172,10 @@ document.querySelector('#payment').addEventListener('change', () => {
 
 const nameValidator = () => { 
     if (name.value.length > 0) {
-        name.style.borderColor = '#228b22'; 
+        name.style.borderColor = '#00303F'; 
         return true; 
     } else {
-        name.style.borderColor = 'red'; 
+        name.style.borderColor = '#c53211'; 
         return false; 
     }
 }
@@ -185,7 +185,7 @@ const nameValidator = () => {
 const emailTip = document.createElement('span'); // create tip element
 const basicInfoFieldset = document.querySelector('.basic');
 basicInfoFieldset.insertBefore(emailTip, email.nextElementSibling); // insert a tip into DOM 
-emailTip.style.color = 'red'; 
+emailTip.style.color = '#c53211'; 
 emailTip.innerHTML = `<span>Please enter a valid email address</span>`;
 emailTip.style.display = 'none'; // hide tip by default
 
@@ -193,12 +193,12 @@ emailTip.style.display = 'none'; // hide tip by default
 
 const emailValidator = () => {
     if (/^\w*@\w*\.\w*$/.test(email.value)) {
-        email.style.borderColor = '#228b22';
+        email.style.borderColor = '#00303F';
         emailTip.style.display = 'none'; 
         return true;
     } else {
         emailTip.style.display = ''; 
-        email.style.borderColor = 'red'; 
+        email.style.borderColor = '#c53211'; 
         return false; 
     }
 }
@@ -207,7 +207,7 @@ const emailValidator = () => {
 
 const activityTip = document.createElement('span');
 activityTip.innerHTML = `<span>At least one activity must be selected</span>`; 
-activityTip.style.color = 'red'; 
+activityTip.style.color = '#c53211'; 
 selectActivity.appendChild(activityTip); 
 activityTip.style.display = 'none'; 
 
@@ -228,14 +228,14 @@ const activityValidator = () => {
 
 const cardNumberTip = document.createElement('span'); 
 const cardNumberDiv = document.querySelector('.col-6'); 
-cardNumberTip.style.color = 'red'; 
+cardNumberTip.style.color = '#c53211'; 
 cardNumberDiv.appendChild(cardNumberTip);
 
 // A function that checks if the card number is between 13 and 16 digits and gives tips depending on the error
 
 const cardNumberValidator = () => {
     if (/^\d{13,16}$/.test(cardNumber.value)) {
-        cardNumber.style.borderColor = '#228b22';
+        cardNumber.style.borderColor = '#00303F';
         cardNumberTip.style.display = 'none'; 
         return true; 
     } else { // show a tip depending on the error 
@@ -249,7 +249,7 @@ const cardNumberValidator = () => {
         } else if (cardNumber.value.length < 13) { // if less than 13 numbers
                 cardNumberTip.innerHTML = `<span>A credit card must be 13 or more digits long</span>`;
             }
-        cardNumber.style.borderColor = 'red'; 
+        cardNumber.style.borderColor = '#c53211'; 
     }
 }
 
@@ -257,10 +257,10 @@ const cardNumberValidator = () => {
 
 const zipCodeValidator = () => {
     if (/^\d{5}$/.test(zipCode.value)) {
-        zipCode.style.borderColor = '#228b22';
+        zipCode.style.borderColor = '#00303F';
         return true;
     } else {
-        zipCode.style.borderColor = 'red';
+        zipCode.style.borderColor = '#c53211';
         return false; 
     } 
 }
@@ -269,10 +269,10 @@ const zipCodeValidator = () => {
 
 const cvvValidator = () => {
     if (/^\d{3}$/.test(cvv.value)) {
-        cvv.style.borderColor = '#228b22';
+        cvv.style.borderColor = '#00303F';
         return true;
     } else {
-        cvv.style.borderColor = 'red'; 
+        cvv.style.borderColor = '#c53211'; 
         return false; 
     }
 }
