@@ -1,6 +1,4 @@
-/* ================================= 
-  Base Element Styles
-==================================== */
+/* Base Element Styles */
 
 @import url('https://fonts.googleapis.com/css?family=Nunito|Roboto+Mono');
 
@@ -15,9 +13,9 @@ button {
 }
 
 body {
-  font: 1em/1.5;
-  color: #00303F;
-	background: #CAE4DB;
+  	font: 1em/1.5;
+	color: white;
+  	background: firebrick;
 }
 
 header {
@@ -25,8 +23,7 @@ header {
 }
 
 h1 {
-	font-size: 2.5em;
-	text-shadow: 2px 2px 0 rgba(255, 255, 255, 0.85);
+	font-size: 3.0em;
 	margin: 0;
 }
 
@@ -34,17 +31,13 @@ a {
   text-decoration: none;
 }
 
-/* ================================= 
-  Form Element Styles
-==================================== */
+  /* Form Element Styles */
 
 form {
-	padding: .875em 1.875em 1.875em;
-	background: #DCAE1D;
-	border: 2px solid #7A9D96;
-	border-radius: 15px;
-	box-shadow: inset 5px 5px 10px #7A9D96,
-	            inset -5px -5px 10px #7A9D96;
+	padding: .8em 1.4em 1.0em;
+	background: white;
+	border: 1px solid rgba(189, 195, 199, 0.5);
+	border-radius: 10px;
 }
 
 fieldset,
@@ -55,7 +48,7 @@ button {
 }
 
 fieldset {
-	margin-top: 1.5em;
+	margin-top: 1.0em;
 }
 
 legend,
@@ -65,8 +58,8 @@ button {
 
 legend {
 	font-weight: bold;
-	padding-top: .5em;
-	border-top: 2px solid rgba(8, 63, 87, 0.6);
+	padding-top: .1em;
+	border-top: 2px solid rgba(189, 195, 199, 0.5);
 	margin-bottom: 1.125em;
 }
 
@@ -77,9 +70,10 @@ legend {
 }
 
 label {
-	color: #00303F;
+	color: black;
 	display: block;
 	margin-bottom: .5em;
+	font-size: 1.1em;
 }
 
 input,
@@ -88,18 +82,17 @@ select {
 }
 
 input {
-	font-size: 1em;
+	font-size: 1.1em;
 	font-weight: 500;
-	padding: .8em;
-	background: #fff;
-	border: 2px solid #7A9D96;
-	border-radius: 10px;
+	padding: .5em;
+	background: white;
+	border: 2px solid rgba(189, 195, 199, 0.5);
+	border-radius: 8px;
 	outline: none;
 }
 
 input:focus {
-	background: #fff;
-	border-color: #7A9D96;
+	background-color: rgba(189, 195, 199, 0.03);
 	transition: border-color .4s, background-color .4s;
 }
 
@@ -109,18 +102,14 @@ input[type="radio"] {
 }
 
 button {
-	color: #CAE4DB;
+	color: white;
 	padding: .55em 1.25em;
-	background: #00303F ;
-	margin: 1.25em 0 .5em;
+	background: firebrick;
+	margin: .25em 0 .5em;
 	cursor: pointer;
-	border: 2px solid #00303F;
+	border: 1px solid rgba(189, 195, 199, 0.5);
 	transition: all 0.5s;
 	border-radius: 10px;
-}
-
-button:hover {
-	background: #7A9D96;
 }
 
 input, 
@@ -129,9 +118,13 @@ option {
 	font-family: 'roboto', sans-serif;
 }
 
-/* ================================= 
-  Page Styles
-==================================== */
+select {
+	background-color: rgba(189, 195, 199, 0.03);
+	color: black;
+	border: 1px solid rgba(189, 195, 199, 0.5);
+}
+
+  /* Page Styles */
 
 .container {
 	margin: auto;
@@ -161,14 +154,12 @@ option {
 .paypal,
 .bitcoin {
 	margin-top: 10px;
-	margin-bottom: 10px;
+	margin-bottom: 5px;
 	padding: 5px;
-	border-radius: 4px;
+	border-radius: 2px;
 }
 
-/* ================================= 
-  Helper Classes
-==================================== */
+  /* Helper Classes */
 
 .is-hidden {
 	display: none;
@@ -180,9 +171,7 @@ option {
   clear: both;
 }
 
-/* ================================= 
-  Media Queries
-==================================== */
+  /* Media Queries */
 
 @media (min-width: 0) and (max-width: 679px) {
 	header {
