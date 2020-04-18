@@ -184,6 +184,7 @@ nameTip.style.display = 'none'; // hide tip by default
 
 const nameValidator = () => { 
     if (name.value.length > 0) {
+        nameTip.style.display = 'none'; 
         name.style.borderColor = 'rgba(189, 195, 199, 0.5)'; 
         name.style.backgroundColor = 'rgb(232, 240, 254)';
         return true; 
