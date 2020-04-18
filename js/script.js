@@ -31,7 +31,7 @@ otherJobRoleField.style.display = 'none';
 
 selectJob.addEventListener('change', () => {
     if (otherJobRole.selected) {
-        otherJobRoleField.style.display = ''; 
+        otherJobRoleField.style.display = 'block'; 
     } else {
         otherJobRoleField.style.display = 'none'; 
     } 
@@ -95,8 +95,9 @@ document.querySelector('#design').addEventListener('change', (event) => {
 // Creating an element for the 'total cost' and appending it to the 'activity fieldset' 
 
 const totalCostElement = document.createElement('p');
-totalCostElement.style.color = 'black';  
-selectActivity.appendChild(totalCostElement); 
+const activitiesLegend = document.querySelector ('.activities > legend');
+totalCostElement.style.color = 'firebrick';  
+activitiesLegend.appendChild(totalCostElement); 
 let totalCost = 0; 
 
 selectActivity.addEventListener('change', (event) => { 
@@ -111,7 +112,7 @@ selectActivity.addEventListener('change', (event) => {
         totalCost -= +clicked.getAttribute('data-cost'); // subtract the cost of the selected activity 
     }  
         
-    totalCostElement.innerHTML = `<p>Total: ${totalCost}$</p>`; // display the total cose dynamically  
+    totalCostElement.innerHTML = `<p>TOTAL: ${totalCost}$</p>`; // display the total cose dynamically  
     
     // Making it not possible to select the activities which are planned for the same time 
 
@@ -156,11 +157,13 @@ document.querySelector('#payment').addEventListener('change', () => {
             bitcoin.style.display = 'none'; 
         }
         if (paymentOption[2].selected) {
+            cardNumberTip.style.display = 'none';
             creditcard.style.display = 'none'; 
             paypal.style.display = ''; 
             bitcoin.style.display = 'none'; 
         }
         if (paymentOption[3].selected) {
+            cardNumberTip.style.display = 'none';
             creditcard.style.display = 'none'; 
             paypal.style.display = 'none'; 
             bitcoin.style.display = ''; 
@@ -168,88 +171,106 @@ document.querySelector('#payment').addEventListener('change', () => {
     }
 });
 
+// A tip which appears dynamically until a user enters a name
+
+const nameTip = document.createElement('p'); // create tip element
+const nameLabel = document.querySelector ('[for="name"]');
+nameLabel.appendChild (nameTip); 
+nameTip.style.color = 'firebrick'; 
+nameTip.textContent = 'PLEASE ENTER YOUR NAME';
+nameTip.style.display = 'none'; // hide tip by default
+
 // A function that checks if the name field is not blank 
 
 const nameValidator = () => { 
     if (name.value.length > 0) {
-        name.style.borderColor = '#00303F'; 
+        name.style.borderColor = 'rgba(189, 195, 199, 0.5)'; 
+        name.style.backgroundColor = 'rgb(232, 240, 254)';
         return true; 
     } else {
-        name.style.borderColor = '#c53211'; 
+        name.style.borderColor = 'firebrick'; 
+        name.style.backgroundColor = 'white';
+        nameTip.style.display = 'block'; 
         return false; 
     }
 }
 
 // A tip which appears dynamically until a user enters a valid email address
 
-const emailTip = document.createElement('span'); // create tip element
-const basicInfoFieldset = document.querySelector('.basic');
-basicInfoFieldset.insertBefore(emailTip, email.nextElementSibling); // insert a tip into DOM 
-emailTip.style.color = '#c53211'; 
-emailTip.innerHTML = `<span>Please enter a valid email address</span>`;
+const emailTip = document.createElement('p'); // create tip element
+const emailLabel = document.querySelector ('[for="mail"]');
+emailLabel.appendChild (emailTip); 
+emailTip.style.color = 'firebrick'; 
+emailTip.textContent = 'PLEASE ENTER A VALID EMAIL ADDRESS';
 emailTip.style.display = 'none'; // hide tip by default
 
 // A function that checks if the email address is validly formatted 
 
 const emailValidator = () => {
     if (/^\w*@\w*\.\w*$/.test(email.value)) {
-        email.style.borderColor = '#00303F';
+        email.style.borderColor = 'rgba(189, 195, 199, 0.5)'; 
+        email.style.backgroundColor = 'rgba(232, 240, 254)';
         emailTip.style.display = 'none'; 
         return true;
     } else {
-        emailTip.style.display = ''; 
-        email.style.borderColor = '#c53211'; 
+        emailTip.style.display = 'block'; 
+        email.style.borderColor = 'firebrick'; 
+        email.style.backgroundColor = 'white';; 
         return false; 
     }
 }
 
 // A tip which appears if no activities are selected before submission 
 
-const activityTip = document.createElement('span');
-activityTip.innerHTML = `<span>At least one activity must be selected</span>`; 
-activityTip.style.color = '#c53211'; 
-selectActivity.appendChild(activityTip); 
-activityTip.style.display = 'none'; 
+const activitiesTip = document.createElement('p');
+activitiesLegend.appendChild (activitiesTip);  
+activitiesTip.textContent = 'AT LEAST ONE ACTIVITY MUST BE SELECTED'; 
+activitiesTip.style.color = 'firebrick'; 
+activitiesTip.style.fontSize = '.9em';
+activitiesTip.style.display = 'none'; 
 
 // A function that checks if at least one activity is chosen  
 
 const activityValidator = () => {
     for (let i = 0; i < activities.length; i ++) {
         if (activities[i].checked > 0) { 
-            activityTip.style.display = 'none'; 
+            activitiesTip.style.display = 'none'; 
             return true;
         }
     }
-    activityTip.style.display = '';
+    activitiesTip.style.display = 'block';
     return false;  
 } 
 
 // A tip which appears to help a user to provide a credit card number
 
-const cardNumberTip = document.createElement('span'); 
-const cardNumberDiv = document.querySelector('.col-6'); 
-cardNumberTip.style.color = '#c53211'; 
-cardNumberDiv.appendChild(cardNumberTip);
+const cardNumberTip = document.createElement('p'); 
+const paymentLegend = document.querySelector ('.payment > legend');
+paymentLegend.appendChild (cardNumberTip); 
+cardNumberTip.style.color = 'firebrick'; 
+cardNumberTip.style.fontSize = '.9em';
 
 // A function that checks if the card number is between 13 and 16 digits and gives tips depending on the error
 
 const cardNumberValidator = () => {
     if (/^\d{13,16}$/.test(cardNumber.value)) {
-        cardNumber.style.borderColor = '#00303F';
         cardNumberTip.style.display = 'none'; 
+        cardNumber.style.borderColor = 'rgba(189, 195, 199, 0.5)'; 
+        cardNumber.style.backgroundColor = 'rgb(232, 240, 254)';
         return true; 
     } else { // show a tip depending on the error 
-        cardNumberTip.style.display = '';
+        cardNumberTip.style.display = 'block';
         if (cardNumber.value.length < 1) { // if the field is blank
-            cardNumberTip.innerHTML = `<span>Please enter a credit card number</span>`; 
+            cardNumberTip.textContent = 'PLEASE ENTER A CREDIT CARD NUMBER'; 
         } else if (/[a-zA-Z]+/.test(cardNumber.value)) { // if contains any letters
-            cardNumberTip.innerHTML = `<span>A credit card must contain only numbers</span>`; 
+            cardNumberTip.textContent = 'A CREDIT CARD NUMBER MUST CONTAIN ONLY DIGITS'; 
         } else if (cardNumber.value.length > 16) { // if more than 16 numbers
-                cardNumberTip.innerHTML = `<span>A credit card must be not longer than 16 digits</span>`;
+                cardNumberTip.textContent = 'A CREADIT CARD NUMBER MUST BE NOT LONGER THAN 16 DIGITS';
         } else if (cardNumber.value.length < 13) { // if less than 13 numbers
-                cardNumberTip.innerHTML = `<span>A credit card must be 13 or more digits long</span>`;
+                cardNumberTip.textContent = 'A CREADIT CARD NUMBER MUST BE 13 OR MORE DIGITS LONG'; 
             }
-        cardNumber.style.borderColor = '#c53211'; 
+        cardNumber.style.borderColor = 'firebrick'; 
+        cardNumber.style.backgroundColor = 'white'; 
     }
 }
 
@@ -257,10 +278,12 @@ const cardNumberValidator = () => {
 
 const zipCodeValidator = () => {
     if (/^\d{5}$/.test(zipCode.value)) {
-        zipCode.style.borderColor = '#00303F';
+        zipCode.style.borderColor = 'rgba(189, 195, 199, 0.5)'; 
+        zipCode.style.backgroundColor = 'rgb(232, 240, 254)';
         return true;
     } else {
-        zipCode.style.borderColor = '#c53211';
+        zipCode.style.borderColor = 'firebrick'; 
+        zipCode.style.backgroundColor = 'white';
         return false; 
     } 
 }
@@ -269,10 +292,12 @@ const zipCodeValidator = () => {
 
 const cvvValidator = () => {
     if (/^\d{3}$/.test(cvv.value)) {
-        cvv.style.borderColor = '#00303F';
+        cvv.style.borderColor = 'rgba(189, 195, 199, 0.5)'; 
+        cvv.style.backgroundColor = 'rgb(232, 240, 254)';
         return true;
     } else {
-        cvv.style.borderColor = '#c53211'; 
+        cvv.style.borderColor = 'firebrick'; 
+        cvv.style.backgroundColor = 'white';
         return false; 
     }
 }
@@ -313,6 +338,6 @@ form.addEventListener('submit', (event) => {
         if (!cardNumberValidator() || !zipCodeValidator() || !cvvValidator()) {
             event.preventDefault();
         } 
-    } 
+    }
 });
 

@@ -14,8 +14,8 @@ button {
 
 body {
   	font: 1em/1.5;
-	color: white;
-  	background: firebrick;
+	color: grey;
+  	background: ghostwhite;
 }
 
 header {
@@ -38,6 +38,7 @@ form {
 	background: white;
 	border: 1px solid rgba(189, 195, 199, 0.5);
 	border-radius: 10px;
+	box-shadow: 1px 1px rgba(189, 195, 199, 0.5);
 }
 
 fieldset,
@@ -58,9 +59,9 @@ button {
 
 legend {
 	font-weight: bold;
-	padding-top: .1em;
+	padding-top: .6em;
 	border-top: 2px solid rgba(189, 195, 199, 0.5);
-	margin-bottom: 1.125em;
+	margin-bottom: .6em;
 }
 
 input[type="text"],
